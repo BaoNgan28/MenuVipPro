@@ -98,10 +98,10 @@ namespace MenuVipPro
                             break;
                         case 1:
                             Console.Clear();
-                            Handle.print_Position("BẠN MUỐN XOÁ SINH VIÊN LỚP: ", 52, 10, ConsoleColor.DarkBlue);
+                            Handle.print_Position("BẠN MUỐN XOÁ SINH VIÊN LỚP: ", 45, 10, ConsoleColor.DarkBlue);
                             string Class = Convert.ToString(Console.ReadLine());
                             manage.showCLASS(Class);
-                            Handle.print_Position("ID CẦN XOÁ: ", 52, 25, ConsoleColor.DarkBlue);
+                            Handle.print_Position("ID CẦN XOÁ: ", 45, 25, ConsoleColor.DarkBlue);
                             int ID = Convert.ToInt32(Console.ReadLine());
                             manage.Delete(ID);
                             Console.Clear();
@@ -109,7 +109,12 @@ namespace MenuVipPro
                             break;
                         case 2:
                             Console.Clear();
-
+                            Handle.print_Position("BẠN MUỐN TÌM SINH VIÊN LỚP: ", 45, 10, ConsoleColor.DarkBlue);
+                            string ClASS = Convert.ToString(Console.ReadLine());
+                            manage.showCLASS(ClASS);
+                            Handle.print_Position("TÊN CẦN TÌM: ", 45, 25, ConsoleColor.DarkBlue);
+                            string keyword = Convert.ToString(Console.ReadLine());
+                            manage.findName(keyword, ClASS);
                             break;
                     }
                     Handle.print_Position("Press anykey to comeback...", 0, 25, ConsoleColor.DarkMagenta);

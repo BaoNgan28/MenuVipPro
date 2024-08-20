@@ -11,13 +11,12 @@ namespace MenuVipPro
     {
         static void Main(string[] args)
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
             Manage manage = new Manage();
             Selection selection = new Selection();
             Handle handle = new Handle(selection);
             MenuStart menu = new MenuStart(handle);
             menu.menuStart();
-            
-
         }
     }
 }

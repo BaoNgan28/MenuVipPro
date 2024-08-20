@@ -38,6 +38,7 @@ namespace MenuVipPro
         public void add_Student()
         {
             Console.Clear();
+            Console.OutputEncoding = Encoding.UTF8;
             Student sv = new Student();
             Handle.print_Position("ID : ", 52, 8, ConsoleColor.DarkYellow);
             sv.Id = Convert.ToInt32(Console.ReadLine());
@@ -70,7 +71,7 @@ namespace MenuVipPro
             return result;
         }
         //tim kiem theo ten
-        public List<Student> findName(string array)
+        public void findName(string array, string Class)
         {
             Console.Clear();
             List<Student> search = new List<Student>();
@@ -78,26 +79,36 @@ namespace MenuVipPro
             {
                 foreach (Student student in Liststudents)
                 {
-                    if (student.Name.ToLower().Contains(array.ToLower()))
+                    if (student.Name.ToLower().Contains(array.ToLower()) && student.Class == Class)
                     {
                         search.Add(student);
                     }
                 }
             }
-            return search;
+            int displayIndex = 0;
+            Console.Clear();
+            foreach (Student student in search)
+            {
+                Handle.print_Position("  ID             HỌ VÀ TÊN            GT  TUỔI      LỚP", 35, 13, ConsoleColor.Cyan);
+                Handle.print_Position($"{student.Id}", 35, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
+                Handle.print_Position($"{student.Name}", 48, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
+                Handle.print_Position($"{student.gender}", 73, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
+                Handle.print_Position($"{student.Age}", 78, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
+                Handle.print_Position($"{student.Class}", 85, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
+            }
         }
         //xoa sv theo id
         public void Delete(int id)
         {
             //tìm ID 
             Student student = FindID(id);
-            if(student != null)
+            if (student != null)
             {
                 Liststudents.Remove(student);
             }
             else
             {
-                Console.Clear() ;
+                Console.Clear();
                 Handle.print_Position("ID KHÔNG HỢP LỆ!!", 50, 15, ConsoleColor.Magenta);
             }
         }
@@ -134,18 +145,19 @@ namespace MenuVipPro
                 {
                     if (student is Teacher)
                     {
-                        Handle.print_Position("GIÁO VIÊN GIẢNG DẠY:", 43, 10, ConsoleColor.Cyan);
-                        Handle.print_Position($"{student.Name}", 43, 11, ConsoleColor.DarkGreen);
-                        Handle.print_Position($"{student.gender}", 68, 11, ConsoleColor.DarkGreen);
-                        Handle.print_Position($"{student.Age}", 73, 11, ConsoleColor.DarkGreen);
+                        Handle.print_Position("GIÁO VIÊN GIẢNG DẠY:", 40, 10, ConsoleColor.Cyan);
+                        Handle.print_Position($"{student.Name}", 40, 11, ConsoleColor.DarkGreen);
+                        Handle.print_Position($"{student.gender}", 65, 11, ConsoleColor.DarkGreen);
+                        Handle.print_Position($"TUỔI: {student.Age}", 70, 11, ConsoleColor.DarkGreen);
                     }
                     else
                     {
-                        Handle.print_Position($"{student.Id}", 40, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
-                        Handle.print_Position($"{student.Name}", 53, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
-                        Handle.print_Position($"{student.gender}", 78, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
-                        Handle.print_Position($"{student.Age}", 83, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
-                        Handle.print_Position($"{student.Class}", 96, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
+                        Handle.print_Position("  ID             HỌ VÀ TÊN            GT  TUỔI      LỚP", 35, 13, ConsoleColor.Cyan);
+                        Handle.print_Position($"{student.Id}", 35, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
+                        Handle.print_Position($"{student.Name}", 48, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
+                        Handle.print_Position($"{student.gender}", 73, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
+                        Handle.print_Position($"{student.Age}", 78, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
+                        Handle.print_Position($"{student.Class}", 85, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
                         displayIndex++;
                     }
                 }
@@ -166,14 +178,14 @@ namespace MenuVipPro
                     else
                     {
                         //header
-                        Handle.print_Position("STT      HỌ VÀ TÊN           GT     TUỔI    GPA      XẾP LOẠI", 39, 13, ConsoleColor.Cyan);
+                        Handle.print_Position("STT      HỌ VÀ TÊN                GT     TUỔI    GPA      XẾP LOẠI", 39, 13, ConsoleColor.Cyan);
                         //ds lớp
-                        Handle.print_Position($"{student.Id}", 40, 15 + displayIndex * 2, ConsoleColor.DarkGreen);
-                        Handle.print_Position($"{student.Name}", 43, 15 + displayIndex * 2, ConsoleColor.DarkGreen);
-                        Handle.print_Position($"{student.gender}", 68, 15 + displayIndex * 2, ConsoleColor.DarkGreen);
-                        Handle.print_Position($"{student.Age}", 76, 15 + displayIndex * 2, ConsoleColor.DarkGreen);
-                        Handle.print_Position($"{student.GPA}", 83, 15 + displayIndex * 2, ConsoleColor.DarkGreen);
-                        Handle.print_Position(arrange(student), 92, 15 + displayIndex * 2, ConsoleColor.DarkGreen);
+                        Handle.print_Position($"{student.Id}", 35, 15 + displayIndex * 2, ConsoleColor.DarkGreen);
+                        Handle.print_Position($"{student.Name}", 48, 15 + displayIndex * 2, ConsoleColor.DarkGreen);
+                        Handle.print_Position($"{student.gender}", 73, 15 + displayIndex * 2, ConsoleColor.DarkGreen);
+                        Handle.print_Position($"{student.Age}", 81, 15 + displayIndex * 2, ConsoleColor.DarkGreen);
+                        Handle.print_Position($"{student.GPA}", 88, 15 + displayIndex * 2, ConsoleColor.DarkGreen);
+                        Handle.print_Position(arrange(student), 97, 15 + displayIndex * 2, ConsoleColor.DarkGreen);
                         displayIndex++;
                     }
                 }

@@ -38,20 +38,20 @@ namespace MenuVipPro
         public void add_Student()
         {
             Console.Clear();
-            Console.OutputEncoding = Encoding.UTF8;
+            Console.InputEncoding = Encoding.UTF8;
             Student sv = new Student();
             Handle.print_Position("ID : ", 52, 8, ConsoleColor.DarkYellow);
             sv.Id = Convert.ToInt32(Console.ReadLine());
             Handle.print_Position("HỌ TÊN : ", 52, 10, ConsoleColor.DarkYellow);
-            sv.Name = Convert.ToString(Console.ReadLine());
+            sv.Name = Console.ReadLine();
             Handle.print_Position("GIỚI TÍNH: ", 52, 12, ConsoleColor.DarkYellow);
-            sv.gender = Convert.ToString(Console.ReadLine());
+            sv.gender = Console.ReadLine();
             Handle.print_Position("TUỔI: ", 52, 14, ConsoleColor.DarkYellow);
             sv.Age = Convert.ToInt32(Console.ReadLine());
             Handle.print_Position("GPA: ", 52, 16, ConsoleColor.DarkYellow);
             sv.GPA = Convert.ToDouble(Console.ReadLine());
             Handle.print_Position("Lớp: ", 52, 18, ConsoleColor.DarkYellow);
-            sv.Class = Convert.ToString(Console.ReadLine());
+            sv.Class = Console.ReadLine();
             Liststudents.Add(sv);
             showCLASS(sv.Class);
         }
@@ -87,14 +87,22 @@ namespace MenuVipPro
             }
             int displayIndex = 0;
             Console.Clear();
-            foreach (Student student in search)
+            if (search.Count > 0)
             {
-                Handle.print_Position("  ID             HỌ VÀ TÊN            GT  TUỔI      LỚP", 35, 13, ConsoleColor.Cyan);
-                Handle.print_Position($"{student.Id}", 35, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
-                Handle.print_Position($"{student.Name}", 48, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
-                Handle.print_Position($"{student.gender}", 73, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
-                Handle.print_Position($"{student.Age}", 78, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
-                Handle.print_Position($"{student.Class}", 85, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
+                foreach (Student student in search)
+                {
+                    Handle.print_Position("  ID             HỌ VÀ TÊN            GT  TUỔI      LỚP", 35, 13, ConsoleColor.Cyan);
+                    Handle.print_Position($"{student.Id}", 35, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
+                    Handle.print_Position($"{student.Name}", 48, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
+                    Handle.print_Position($"{student.gender}", 73, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
+                    Handle.print_Position($"{student.Age}", 78, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
+                    Handle.print_Position($"{student.Class}", 85, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
+                    displayIndex++;
+                }
+            }
+            else
+            {
+                Handle.print_Position("KHÔNG TÌM THẤY SINH VIÊN NÀO PHÙ HỢP!", 45, 13, ConsoleColor.Red);
             }
         }
         //xoa sv theo id

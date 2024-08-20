@@ -10,11 +10,12 @@ namespace MenuVipPro
     {
         private string[] classItems = { "23DTHA4", "23DTHA5" };
         private string[] pointItems = { "23DTHA4", "23DTHA5" };
-        private string[] adjustItems = { "ADD", "DELETE", "FIND" };
+        private string[] adjustItems = { "ADD STUDENT", "DELETE", "FIND" };
         private Manage manage = new Manage();
         //LỚP
         public void showClass()
         {
+            Handle.reset();
             while (true)
             {
                 Console.Clear();
@@ -36,7 +37,7 @@ namespace MenuVipPro
                 {
                     string choose = classItems[Handle.positions];
                     manage.showCLASS(choose);
-                    Handle.print_Position("Press anykey to comeback...", 0, 20, ConsoleColor.DarkMagenta);
+                    Handle.print_Position("Press anykey to comeback...", 0, 25, ConsoleColor.DarkMagenta);
                     break; //Tại sao break ở đây thì quay về trang chính
                 }
             }
@@ -44,6 +45,7 @@ namespace MenuVipPro
         //điểm
         public void showPoint()
         {
+            Handle.reset();
             while (true)
             {
                 Console.Clear();
@@ -63,7 +65,7 @@ namespace MenuVipPro
                 {
                     string choose = pointItems[Handle.positions];
                     manage.showPOINT(choose);
-                    Handle.print_Position("Press anykey to comeback...", 0, 20, ConsoleColor.DarkMagenta);
+                    Handle.print_Position("Press anykey to comeback...", 0, 25, ConsoleColor.DarkMagenta);
                     break;
                 }
             }
@@ -71,6 +73,7 @@ namespace MenuVipPro
         //diều chỉnh
         public void showAdjust()
         {
+            Handle.reset();
             while (true)
             {
                 Console.Clear();
@@ -86,6 +89,32 @@ namespace MenuVipPro
                     }
                 }
                 int position = Handle.HandleKey(adjustItems);
+                if (position == -1)
+                {
+                    switch(Handle.positions)
+                    {
+                        case 0:
+                            manage.add_Student();
+                            break;
+                        case 1:
+                            Console.Clear();
+                            Handle.print_Position("BẠN MUỐN XOÁ SINH VIÊN LỚP: ", 52, 10, ConsoleColor.DarkBlue);
+                            string Class = Convert.ToString(Console.ReadLine());
+                            manage.showCLASS(Class);
+                            Handle.print_Position("ID CẦN XOÁ: ", 52, 25, ConsoleColor.DarkBlue);
+                            int ID = Convert.ToInt32(Console.ReadLine());
+                            manage.Delete(ID);
+                            Console.Clear();
+                            manage.showCLASS(Class);
+                            break;
+                        case 2:
+                            Console.Clear();
+
+                            break;
+                    }
+                    Handle.print_Position("Press anykey to comeback...", 0, 25, ConsoleColor.DarkMagenta);
+                    break;
+                }
             }
         }
     }

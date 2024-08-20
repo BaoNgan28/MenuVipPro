@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Runtime.Remoting.Messaging;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -22,22 +23,24 @@ namespace MenuVipPro
             //giáo viên 23dtha4
             Liststudents.Add(new Teacher { Name = "Quang Mắt Lòi", Age = 40, gender = "Nam", Class = "23DTHA4" });
             //sinh viên 23dtha4
-            Liststudents.Add(new Student { Stt = 1, Name = "Nguyễn Trường Phát", Age = 19, gender = "Nữ", Class = "23DTHA4" , GPA = 3.5});
-            Liststudents.Add(new Student { Stt = 2, Name = "Nguyễn Thanh Bảo Ngân", Age = 19, gender = "Nữ", Class = "23DTHA4", GPA = 3.6 });
-            Liststudents.Add(new Student { Stt = 3, Name = "Huỳnh Ngọc Anh Tuấn", Age = 19, gender = "Nam", Class = "23DTHA4", GPA = 4.0 });
+            Liststudents.Add(new Student { Id = 2380601, Name = "Nguyễn Trường Phát", Age = 19, gender = "Nữ", Class = "23DTHA4", GPA = 3.5 });
+            Liststudents.Add(new Student { Id = 2380608, Name = "Nguyễn Thanh Bảo Ngân", Age = 19, gender = "Nữ", Class = "23DTHA4", GPA = 3.6 });
+            Liststudents.Add(new Student { Id = 2380612, Name = "Huỳnh Ngọc Anh Tuấn", Age = 19, gender = "Nam", Class = "23DTHA4", GPA = 4.0 });
             //giáo viên 23dtha5
             Liststudents.Add(new Teacher { Name = "Nguyễn Công Quang", Age = 40, gender = "Nam", Class = "23DTHA5" });
             //sinh viên 23 dtha5
-            Liststudents.Add(new Student { Stt = 1, Name = "Nguyễn Trường Phát", Age = 19, gender = "Nữ", Class = "23DTHA5", GPA = 4.0 });
-            Liststudents.Add(new Student { Stt = 2, Name = "Nguyễn Thanh Bảo Ngân", Age = 19, gender = "Nữ", Class = "23DTHA5", GPA = 3.6 });
-            Liststudents.Add(new Student { Stt = 3, Name = "Huỳnh Ngọc Anh Tuấn", Age = 19, gender = "Nam", Class = "23DTHA5", GPA = 3.5 });
-            Liststudents.Add(new Student { Stt = 4, Name = "Lê Huỳnh Ngọc", Age = 19, gender = "Nam", Class = "23DTHA5", GPA = 3.8 });
+            Liststudents.Add(new Student { Id = 2380600, Name = "Nguyễn Xuân Phát", Age = 19, gender = "Nam", Class = "23DTHA5", GPA = 4.0 });
+            Liststudents.Add(new Student { Id = 2380609, Name = "Nguyễn Thanh Ngân", Age = 19, gender = "Nữ", Class = "23DTHA5", GPA = 3.6 });
+            Liststudents.Add(new Student { Id = 2380605, Name = "Huỳnh Ngọc Tuấn Anh", Age = 19, gender = "Nam", Class = "23DTHA5", GPA = 3.5 });
+            Liststudents.Add(new Student { Id = 2380620, Name = "Lê Huỳnh Ngọc", Age = 19, gender = "Nam", Class = "23DTHA5", GPA = 3.8 });
         }
         //nhap sv
         public void add_Student()
         {
             Console.Clear();
             Student sv = new Student();
+            Handle.print_Position("ID : ", 52, 8, ConsoleColor.DarkYellow);
+            sv.Id = Convert.ToInt32(Console.ReadLine());
             Handle.print_Position("HỌ TÊN : ", 52, 10, ConsoleColor.DarkYellow);
             sv.Name = Convert.ToString(Console.ReadLine());
             Handle.print_Position("GIỚI TÍNH: ", 52, 12, ConsoleColor.DarkYellow);
@@ -45,18 +48,31 @@ namespace MenuVipPro
             Handle.print_Position("TUỔI: ", 52, 14, ConsoleColor.DarkYellow);
             sv.Age = Convert.ToInt32(Console.ReadLine());
             Handle.print_Position("GPA: ", 52, 16, ConsoleColor.DarkYellow);
-            sv.GPA = Convert.ToInt32(Console.ReadLine());
+            sv.GPA = Convert.ToDouble(Console.ReadLine());
+            Handle.print_Position("Lớp: ", 52, 18, ConsoleColor.DarkYellow);
+            sv.Class = Convert.ToString(Console.ReadLine());
             Liststudents.Add(sv);
+            showCLASS(sv.Class);
         }
-        //xoa sv theo stt
-        public void Delete(int Stt)
+
+        //tìm kiếm theo id
+        public Student FindID(int ID)
         {
-            Handle.print_Position("NHẬP STT CẦN XOÁ: ", 52, 10, ConsoleColor.DarkBlue);
-            Liststudents.Remove(Liststudents[Stt - 1]);
+            Student result = null; //khởi tạo giá trị
+            if (Liststudents != null && Liststudents.Count > 0)
+            {
+                foreach (Student student in Liststudents)
+                {
+                    if (student.Id == ID)
+                        result = student;
+                }
+            }
+            return result;
         }
-        //tim kiem
+        //tim kiem theo ten
         public List<Student> findName(string array)
         {
+            Console.Clear();
             List<Student> search = new List<Student>();
             if (Liststudents != null && Liststudents.Count > 0)
             {
@@ -70,7 +86,21 @@ namespace MenuVipPro
             }
             return search;
         }
-
+        //xoa sv theo id
+        public void Delete(int id)
+        {
+            //tìm ID 
+            Student student = FindID(id);
+            if(student != null)
+            {
+                Liststudents.Remove(student);
+            }
+            else
+            {
+                Console.Clear() ;
+                Handle.print_Position("ID KHÔNG HỢP LỆ!!", 50, 15, ConsoleColor.Magenta);
+            }
+        }
         //xếp loại gpa:
         public string arrange(Student student)
         {
@@ -111,11 +141,11 @@ namespace MenuVipPro
                     }
                     else
                     {
-                        Handle.print_Position($"{student.Stt}", 40, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
-                        Handle.print_Position($"{student.Name}", 43, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
-                        Handle.print_Position($"{student.gender}", 68, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
-                        Handle.print_Position($"{student.Age}", 73, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
-                        Handle.print_Position($"{student.Class}", 76, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
+                        Handle.print_Position($"{student.Id}", 40, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
+                        Handle.print_Position($"{student.Name}", 53, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
+                        Handle.print_Position($"{student.gender}", 78, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
+                        Handle.print_Position($"{student.Age}", 83, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
+                        Handle.print_Position($"{student.Class}", 96, 14 + displayIndex * 2, ConsoleColor.DarkGreen);
                         displayIndex++;
                     }
                 }
@@ -133,12 +163,12 @@ namespace MenuVipPro
                 {
                     if (student is Teacher)
                     { }
-                    else 
+                    else
                     {
                         //header
                         Handle.print_Position("STT      HỌ VÀ TÊN           GT     TUỔI    GPA      XẾP LOẠI", 39, 13, ConsoleColor.Cyan);
                         //ds lớp
-                        Handle.print_Position($"{student.Stt}", 40, 15 + displayIndex * 2, ConsoleColor.DarkGreen);
+                        Handle.print_Position($"{student.Id}", 40, 15 + displayIndex * 2, ConsoleColor.DarkGreen);
                         Handle.print_Position($"{student.Name}", 43, 15 + displayIndex * 2, ConsoleColor.DarkGreen);
                         Handle.print_Position($"{student.gender}", 68, 15 + displayIndex * 2, ConsoleColor.DarkGreen);
                         Handle.print_Position($"{student.Age}", 76, 15 + displayIndex * 2, ConsoleColor.DarkGreen);

@@ -8,7 +8,6 @@ namespace MenuVipPro
 {
     public class Student
     {
-        public int Stt { get; set; }
         public int Id { get; set; }
         public string Name { get; set; }
         public string gender { get; set; }

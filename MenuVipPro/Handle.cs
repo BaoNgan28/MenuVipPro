@@ -15,6 +15,8 @@ namespace MenuVipPro
         {
             this.selection = selection;
         }
+        public static void reset()
+            { positions = 0; }
 
         public static int HandleKey(string[] array)
         {
